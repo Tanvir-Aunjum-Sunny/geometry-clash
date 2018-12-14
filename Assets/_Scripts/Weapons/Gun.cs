@@ -12,20 +12,23 @@ public enum GunState
     RELOADING
 }
 
+public enum GunType
+{
+    AUTOMATIC,
+    SHOTGUN,
+    SINGLESHOT,
+    PISTOL
+}
+
+
 /// <summary>
 /// Basic gun
 /// </summary>
 public class Gun : ExtendedMonoBehaviour
 {
-    [Header("Bullet Settings")]
-    [SerializeField] private float fireRate = 0.5f;
-    [SerializeField] private int clipBullets;
-    [SerializeField] private int clipSize = 10;
-    [SerializeField] private float reloadTime = 1.5f;
+    public GunData Data;
 
-    [Header("Effects")]
-    [SerializeField] private AudioClip emptySound;
-    [SerializeField] private AudioClip reloadSound;
+    [SerializeField] private int bulletsInClip;
 
     [Header("Miscellaneous")]
     [SerializeField] private GameObject projectilePrefab;
@@ -36,12 +39,22 @@ public class Gun : ExtendedMonoBehaviour
 
     void Start()
     {
+        if (Data == null) Data = ScriptableObject.CreateInstance<GunData>();
+
         // Weapons start loaded
-        clipBullets = clipSize;
+        bulletsInClip = Data.ClipSize;
         state = GunState.READY;
 
         // Weapon transform used as default firing transform (if no change is necessary)
         if (firingTransform == null) firingTransform = transform;
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.DebugMode)
+        {
+            Debug.DrawRay(firingTransform.position, firingTransform.position + firingTransform.forward * 10, Color.blue);
+        }
     }
 
 
@@ -53,7 +66,7 @@ public class Gun : ExtendedMonoBehaviour
         // Cannot fire empty gun (indicated with empty click)
         if (state == GunState.EMPTY)
         {
-            AudioManager.Instance.PlayEffect(emptySound, transform.position);
+            AudioManager.Instance.PlayEffect(Data.EmptySound, transform.position);
             return;
         }
         // Cannot fire while reloading or immediately after firing
@@ -70,15 +83,15 @@ public class Gun : ExtendedMonoBehaviour
         );
 
         Projectile projectile = projectilePrefab.GetComponent<Projectile>();
-        AudioManager.Instance.PlayEffect(projectile.Data.FireSound, transform.position);
+        AudioManager.Instance.PlayEffect(Data.FireSound, transform.position);
 
-        clipBullets--;
+        bulletsInClip--;
         state = GunState.FIRING;
 
         // Fire rate prevents rapid-firing (unless empty)
-        if (clipBullets > 0)
+        if (bulletsInClip > 0)
         {
-            Wait(fireRate, () =>
+            Wait(Data.FireRate, () =>
             {
                 state = GunState.READY;
             });
@@ -101,12 +114,12 @@ public class Gun : ExtendedMonoBehaviour
         }
 
 
-        AudioManager.Instance.PlayEffect(reloadSound, transform.position, 20f);
+        AudioManager.Instance.PlayEffect(Data.ReloadSound, transform.position, 20f);
 
         // Reset gun state after timeout
         state = GunState.RELOADING;
-        Wait(reloadTime, () => {
-            clipBullets = clipSize;
+        Wait(Data.ReloadTime, () => {
+            bulletsInClip = Data.ClipSize;
             state = GunState.READY;
         });
     }

@@ -25,6 +25,7 @@ public class GunController : ExtendedMonoBehaviour
     [SerializeField] private List<Gun> guns = new List<Gun>();
 
     private GunControllerState state;
+    private int equippedGunIndex;
 
     private bool hasGunEquipped
     {
@@ -47,12 +48,30 @@ public class GunController : ExtendedMonoBehaviour
 
     private void Update()
     {
-        if (hasGunEquipped && state == GunControllerState.READY)
+        // Equip a different gun
+        if (Input.GetMouseButtonDown(1))
+        {
+            int newGunIndex = equippedGunIndex == 0 ? 1 : 0;
+
+            EquipGun(guns[newGunIndex]);
+        }
+        // Other gun actions
+        else if (hasGunEquipped && state == GunControllerState.READY)
         {
             // Fire weapon
-            if (Input.GetMouseButtonDown(0))
+            if (equippedGun.Data.Type == GunType.AUTOMATIC)
             {
-                equippedGun.Fire();
+                if (Input.GetMouseButton(0))
+                {
+                    equippedGun.Fire();
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    equippedGun.Fire();
+                }
             }
 
             // Reload gun
@@ -73,6 +92,14 @@ public class GunController : ExtendedMonoBehaviour
         if (equippedGun != null)
         {
             Destroy(equippedGun.gameObject);
+        }
+
+        equippedGunIndex = guns.FindIndex(x => x == gunToEquip);
+
+        // Prevent switching to gun player does not have
+        if (equippedGunIndex < 0)
+        {
+            return;
         }
 
         // Equip weapon into player hand

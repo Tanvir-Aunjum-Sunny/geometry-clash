@@ -21,6 +21,8 @@ public class AudioManager : GameSingleton<AudioManager>
     /// <param name="volume">Volume multiplier</param>
     public void PlayEffect(AudioClip clip, Vector3 position, float volume = 1f)
     {
+        if (clip == null) return;
+
         AudioSource.PlayClipAtPoint(clip, position, EffectVolume * MasterVolume * volume);
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e10b9578584b8499030508cba2e7e6, type: 3}
+  m_Name: GunAutomatic
+  m_EditorClassIdentifier: 
+  FireRate: 0.05
+  ReloadTime: 2
+  ClipSize: 30
+  Type: 0
+  FireEffect: {fileID: 0}
+  FireSound: {fileID: 8300000, guid: 3fb062ad9fa96a243b5fbe5e21b719ae, type: 3}
+  EmptySound: {fileID: 8300000, guid: 106e9dd109807274b8593ff20f642a3e, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 8cc603dfe3218dc42a26259929458099, type: 3}

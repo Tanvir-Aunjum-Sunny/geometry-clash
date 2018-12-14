@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861551787}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3290832900702524815}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2712144524509027722
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,10 +278,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GunEquipTime: 1
+  reloadKey: 114
   weaponTransform: {fileID: 1861551788}
   equippedGun: {fileID: 0}
   guns:
-  - {fileID: 3946129338640076745, guid: 2ada699bd34af334cafea83fd5548064, type: 3}
+  - {fileID: 3028933425147455363, guid: 840951d02ece40642be0f95ae714f180, type: 3}
+  - {fileID: 4115609054819871151, guid: c8a48461869eab84fb2db2d253fb2e88, type: 3}
 --- !u!1 &6710568296725800251
 GameObject:
   m_ObjectHideFlags: 0

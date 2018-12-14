@@ -48,6 +48,19 @@ public class Projectile : ExtendedMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Bullet collision with other entities
+    /// </summary>
+    /// <param name="collider">Colliding entity</param>
+    private void OnCollisionEnter(Collision collider)
+    {
+        AudioManager.Instance.PlayEffect(Data.HitSound, transform.position);
+
+        // TODO: Trigger damage
+
+        Destroy(gameObject);
+    }
+
 
     /// <summary>
     /// Destroy fired projectile
@@ -61,7 +74,7 @@ public class Projectile : ExtendedMonoBehaviour
             Instantiate(Data.DestroyEffect, transform.position, Quaternion.identity);
         }
 
-        // TODO: Play sound effect
+        // TODO: Play sound effect?
 
         Destroy(gameObject);
     }
