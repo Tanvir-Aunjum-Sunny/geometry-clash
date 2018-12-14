@@ -9,6 +9,7 @@ public class Player : ExtendedMonoBehaviour
     private Vector3 velocity;
     private Vector3 lookPoint;
 
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,6 +27,7 @@ public class Player : ExtendedMonoBehaviour
         // Move player
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
+
 
     /// <summary>
     /// Update player velocity

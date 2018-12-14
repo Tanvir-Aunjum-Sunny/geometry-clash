@@ -12,7 +12,7 @@ public class Projectile : ExtendedMonoBehaviour
 
     private Vector3 origin;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         if (Data == null) Data = new ProjectileData();
@@ -27,7 +27,6 @@ public class Projectile : ExtendedMonoBehaviour
         });
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Projectiles can have limited range (semi-unusual)
@@ -40,19 +39,24 @@ public class Projectile : ExtendedMonoBehaviour
             return;
         }
 
+        transform.Translate(Vector3.forward * Data.Speed * Time.deltaTime);
+
         if (GameManager.Instance.DebugMode)
         {
             Debug.DrawLine(origin, transform.position, Color.blue);
             Debug.DrawRay(transform.position, transform.forward * 10, Color.green);
         }
-
-        transform.Translate(Vector3.forward * Data.Speed * Time.deltaTime);
     }
 
-    public void DestroyProjectile(bool ShowEffect = false)
+
+    /// <summary>
+    /// Destroy fired projectile
+    /// </summary>
+    /// <param name="showEffect">Whether death effect is shown</param>
+    public void DestroyProjectile(bool showEffect = false)
     {
         // Display effect when projectile is destroyed
-        if (ShowEffect && Data.DestroyEffect != null)
+        if (showEffect && Data.DestroyEffect != null)
         {
             Instantiate(Data.DestroyEffect, transform.position, Quaternion.identity);
         }

@@ -33,6 +33,7 @@ public class Gun : ExtendedMonoBehaviour
 
     private GunState state;
 
+
     void Start()
     {
         // Weapons start loaded
@@ -42,6 +43,7 @@ public class Gun : ExtendedMonoBehaviour
         // Weapon transform used as default firing transform (if no change is necessary)
         if (firingTransform == null) firingTransform = transform;
     }
+
 
     /// <summary>
     /// Fire a bullet
@@ -98,11 +100,11 @@ public class Gun : ExtendedMonoBehaviour
             return;
         }
 
-        state = GunState.RELOADING;
 
         AudioManager.Instance.PlayEffect(reloadSound, transform.position, 20f);
 
         // Reset gun state after timeout
+        state = GunState.RELOADING;
         Wait(reloadTime, () => {
             clipBullets = clipSize;
             state = GunState.READY;

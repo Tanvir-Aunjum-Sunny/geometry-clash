@@ -7,7 +7,6 @@ public class PlayerController : ExtendedMonoBehaviour
 {
     [SerializeField] private CharacterMovementSettings Movement;
     [SerializeField] private CharacterMouseSettings Mouse;
-    [SerializeField] private Gun gun;
 
     private Player player;
     private Vector3 velocity;
@@ -42,19 +41,6 @@ public class PlayerController : ExtendedMonoBehaviour
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         velocity = Movement.GetTargetVelocity(moveInput.normalized);
         player.Move(velocity);
-
-        // Fire weapon
-        // TODO: Move to weapon class? Needs to know if held though
-        if (Input.GetMouseButtonDown(0) && gun != null)
-        {
-            gun.Fire();
-        }
-
-        // Reload gun
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            gun.Reload();
-        }
     }
 
     private void OnDrawGizmos()
