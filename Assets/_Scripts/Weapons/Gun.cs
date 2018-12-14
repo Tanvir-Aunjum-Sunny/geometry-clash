@@ -33,6 +33,7 @@ public class Gun : ExtendedMonoBehaviour
     [Header("Miscellaneous")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firingTransform;
+    [SerializeField] private ParticleSystem shellParticle;
 
     private GunState state;
 
@@ -84,6 +85,9 @@ public class Gun : ExtendedMonoBehaviour
 
         Projectile projectile = projectilePrefab.GetComponent<Projectile>();
         AudioManager.Instance.PlayEffect(Data.FireSound, transform.position);
+
+        // shellParticle.Emit(1);
+        if (shellParticle != null) shellParticle.Play();
 
         bulletsInClip--;
         state = GunState.FIRING;
