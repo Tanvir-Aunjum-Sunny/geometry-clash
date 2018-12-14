@@ -23,7 +23,7 @@ public class Projectile : ExtendedMonoBehaviour
         float lifetimeCap = Data.HasLifetime ? Mathf.Min(Data.MaxLifetime, MAX_PROJECTILE_LIFETIME) : MAX_PROJECTILE_LIFETIME;
         Wait(lifetimeCap, () =>
         {
-            DestroyProjectile(false);
+            DestroyProjectile();
         });
     }
 
@@ -35,7 +35,7 @@ public class Projectile : ExtendedMonoBehaviour
 
         if (distanceTravelled > distanceCap)
         {
-            DestroyProjectile(false);
+            DestroyProjectile();
             return;
         }
 
@@ -54,11 +54,16 @@ public class Projectile : ExtendedMonoBehaviour
     /// <param name="collider">Colliding entity</param>
     private void OnCollisionEnter(Collision collider)
     {
-        AudioManager.Instance.PlayEffect(Data.HitSound, transform.position);
-
         // TODO: Trigger damage
 
-        DestroyProjectile(true);
+        AudioManager.Instance.PlayEffect(Data.HitSound, transform.position);
+
+        if (Data.HitEffect != null)
+        {
+            Instantiate(Data.HitEffect, transform.position, Quaternion.identity);
+        }
+
+        DestroyProjectile();
     }
 
 
@@ -66,14 +71,8 @@ public class Projectile : ExtendedMonoBehaviour
     /// Destroy fired projectile
     /// </summary>
     /// <param name="showHitEffect">Whether hit effect is shown</param>
-    public void DestroyProjectile(bool showHitEffect = false)
+    public void DestroyProjectile()
     {
-        // Display effect when projectile is destroyed
-        if (showHitEffect && Data.HitEffect != null)
-        {
-            Instantiate(Data.HitEffect, transform.position, Quaternion.identity);
-        }
-
         // TODO: Play sound effect?
 
         Destroy(gameObject);
