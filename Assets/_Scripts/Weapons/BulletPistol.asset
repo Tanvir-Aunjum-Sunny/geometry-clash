@@ -18,6 +18,6 @@ MonoBehaviour:
   MaxRange: 25
   HasLifetime: 0
   MaxLifetime: 0
-  DestroyEffect: {fileID: 0}
-  FireSound: {fileID: 8300000, guid: b62ae8947e120bc41a59e76f2b53c733, type: 3}
-  DestroySound: {fileID: 0}
+  HitEffect: {fileID: 5086290544717913756, guid: b6ba5f3c4926f410a97acd6b77d3b348,
+    type: 3}
+  HitSound: {fileID: 0}

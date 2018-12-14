@@ -91,10 +91,8 @@ public class GunController : ExtendedMonoBehaviour
     /// <param name="gunToEquip">Gun to equip</param>
     public void EquipGun(Gun gunToEquip)
     {
-        print("test");
         // Can only equip gun when previous gun is ready
         if (state == GunControllerState.EQUIPPING) return;
-        print("test2");
 
         if (equippedGun != null)
         {

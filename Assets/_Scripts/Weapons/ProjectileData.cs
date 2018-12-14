@@ -19,7 +19,7 @@ public class ProjectileData : ScriptableObject
     public float MaxLifetime = 0;
 
     [Header("Effects")]
-    public GameObject DestroyEffect;
+    public GameObject HitEffect;
     public AudioClip HitSound;
 }
 

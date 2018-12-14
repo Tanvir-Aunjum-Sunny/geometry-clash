@@ -58,20 +58,20 @@ public class Projectile : ExtendedMonoBehaviour
 
         // TODO: Trigger damage
 
-        Destroy(gameObject);
+        DestroyProjectile(true);
     }
 
 
     /// <summary>
     /// Destroy fired projectile
     /// </summary>
-    /// <param name="showEffect">Whether death effect is shown</param>
-    public void DestroyProjectile(bool showEffect = false)
+    /// <param name="showHitEffect">Whether hit effect is shown</param>
+    public void DestroyProjectile(bool showHitEffect = false)
     {
         // Display effect when projectile is destroyed
-        if (showEffect && Data.DestroyEffect != null)
+        if (showHitEffect && Data.HitEffect != null)
         {
-            Instantiate(Data.DestroyEffect, transform.position, Quaternion.identity);
+            Instantiate(Data.HitEffect, transform.position, Quaternion.identity);
         }
 
         // TODO: Play sound effect?
