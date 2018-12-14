@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Instantiate guns on awake (rather than always destroying/creating)
+
 
 /// <summary>
 /// Gun controller state
@@ -24,7 +26,7 @@ public class GunController : ExtendedMonoBehaviour
     [SerializeField] private Gun equippedGun;
     [SerializeField] private List<Gun> guns = new List<Gun>();
 
-    private GunControllerState state;
+    private GunControllerState state = GunControllerState.READY;
     private int equippedGunIndex;
 
     private bool hasGunEquipped
@@ -89,18 +91,19 @@ public class GunController : ExtendedMonoBehaviour
     /// <param name="gunToEquip">Gun to equip</param>
     public void EquipGun(Gun gunToEquip)
     {
+        print("test");
+        // Can only equip gun when previous gun is ready
+        if (state == GunControllerState.EQUIPPING) return;
+        print("test2");
+
         if (equippedGun != null)
         {
             Destroy(equippedGun.gameObject);
         }
 
-        equippedGunIndex = guns.FindIndex(x => x == gunToEquip);
-
         // Prevent switching to gun player does not have
-        if (equippedGunIndex < 0)
-        {
-            return;
-        }
+        equippedGunIndex = guns.FindIndex(x => x == gunToEquip);
+        if (equippedGunIndex < 0) return;
 
         // Equip weapon into player hand
         state = GunControllerState.EQUIPPING;
