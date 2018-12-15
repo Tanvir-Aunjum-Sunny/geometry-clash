@@ -59,8 +59,7 @@ public class Spawner : ExtendedMonoBehaviour
     /// </summary>
     private void OnEnemyDeath()
     {
-        enemiesRemainingInWave--;
-        if (enemiesRemainingInWave > 0) return;
+        if (enemiesRemainingInWave-- > 0) return;
 
         // Next wave starts immediately after last enemy death
         NextWave();
