@@ -31,8 +31,6 @@ public class Projectile : ExtendedMonoBehaviour
 
     void Update()
     {
-        float frameMoveDistance = Data.Speed * Time.deltaTime;
-
         // Projectiles can have limited range (semi-unusual)
         float distanceCap = Data.HasMaxRange ? Mathf.Min(Data.MaxRange, MAX_PROJECTILE_DISTANCE) : MAX_PROJECTILE_DISTANCE;
         float distanceTravelled = Vector3.Distance(origin, transform.position);
@@ -45,6 +43,7 @@ public class Projectile : ExtendedMonoBehaviour
 
         // Check collisions safely by raycasting (prevents clipping through obstacles).
         //   If a collision will happen within the frame move to within collision distance.
+        float frameMoveDistance = Data.Speed * Time.deltaTime;
         float distanceToCollision;
         if (CheckCollisions(frameMoveDistance, out distanceToCollision))
         {
@@ -69,12 +68,14 @@ public class Projectile : ExtendedMonoBehaviour
     private void OnCollisionEnter(Collision collider)
     {
         // Only detect collisions on appropriate layers
-        if (!UnityExtensions.LayerContains(CollisionMask, collider.gameObject.layer))
-        {
-            return;
-        }
+        if (!UnityExtensions.LayerContains(CollisionMask, collider.gameObject.layer)) return;
 
-        // TODO: Trigger damage
+        // Apply damage to collider if appropriate
+        IDamageable damageableObject = collider.gameObject.GetComponent<IDamageable>();
+        if (damageableObject != null)
+        {
+            damageableObject.TakeHit(Data.Damage, collider);
+        }
 
         AudioManager.Instance.PlayEffect(Data.HitSound, transform.position);
 
@@ -109,7 +110,6 @@ public class Projectile : ExtendedMonoBehaviour
     /// <summary>
     /// Destroy fired projectile
     /// </summary>
-    /// <param name="showHitEffect">Whether hit effect is shown</param>
     public void DestroyProjectile()
     {
         // TODO: Play sound effect?

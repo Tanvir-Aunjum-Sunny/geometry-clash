@@ -40,7 +40,7 @@ public class GunController : ExtendedMonoBehaviour
         // Equip first gun if none is equipped
         if (equippedGun == null && guns.Count > 0)
         {
-            EquipGun(guns[0]);
+            EquipGun(guns[0], true);
         }
         else
         {
@@ -89,7 +89,8 @@ public class GunController : ExtendedMonoBehaviour
     /// Equip a new gun
     /// </summary>
     /// <param name="gunToEquip">Gun to equip</param>
-    public void EquipGun(Gun gunToEquip)
+    /// <param name="skipEquipTime">Whether equip time is skipped</param>
+    public void EquipGun(Gun gunToEquip, bool skipEquipTime = false)
     {
         // Can only equip gun when previous gun is ready
         if (state == GunControllerState.EQUIPPING) return;
@@ -105,7 +106,8 @@ public class GunController : ExtendedMonoBehaviour
 
         // Equip weapon into player hand
         state = GunControllerState.EQUIPPING;
-        Wait(GunEquipTime, () =>
+        float equipDelay = skipEquipTime ? 0 : GunEquipTime;
+        Wait(equipDelay, () =>
         {
             equippedGun = Instantiate(gunToEquip, weaponTransform.position, weaponTransform.rotation);
             equippedGun.transform.parent = weaponTransform;

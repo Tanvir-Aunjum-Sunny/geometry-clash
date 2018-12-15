@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Player : ExtendedMonoBehaviour
+public class Player : Entity
 {
     private Rigidbody rb;
     private Vector3 velocity;
     private Vector3 lookPoint;
 
 
-    private void Start()
+    protected void Start()
     {
         rb = GetComponent<Rigidbody>();
     }

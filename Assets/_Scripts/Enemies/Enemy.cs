@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : ExtendedMonoBehaviour
+public class Enemy : Entity
 {
     [Range(0, 1)]
     public float AgentPathRefreshRate = 0.25f;
@@ -12,7 +12,8 @@ public class Enemy : ExtendedMonoBehaviour
     private Transform target;
     private NavMeshAgent pathfinder;
 
-    void Start()
+
+    protected void Start()
     {
         pathfinder = GetComponent<NavMeshAgent>();
         target = GameManager.Instance.Player.transform;
@@ -29,6 +30,8 @@ public class Enemy : ExtendedMonoBehaviour
     {
         while (target != null)
         {
+            if (!IsAlive) yield return null;
+
             Vector3 targetPosition = new Vector3(target.position.x, 0, target.position.z);
             pathfinder.SetDestination(targetPosition);
 
