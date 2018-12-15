@@ -13,9 +13,9 @@ public class ExtendedMonoBehaviour : MonoBehaviour
     /// </summary>
     /// <param name="seconds">Timeout duration</param>
     /// <param name="action">Delegate callback</param>
-    public void Wait(float seconds, Action action)
+    public Coroutine Wait(float seconds, Action action)
     {
-        StartCoroutine(SetTimeout(seconds, action));
+        return StartCoroutine(SetTimeout(seconds, action));
     }
 
     /// <summary>
