@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5348526647431706019}
   - component: {fileID: 4229644262397850214}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BulletPistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,3 +124,6 @@ MonoBehaviour:
   MAX_PROJECTILE_DISTANCE: 100
   MAX_PROJECTILE_LIFETIME: 10
   Data: {fileID: 11400000, guid: 0537d24d365ff8d4092293cd1c454873, type: 2}
+  CollisionMask:
+    serializedVersion: 2
+    m_Bits: 3584

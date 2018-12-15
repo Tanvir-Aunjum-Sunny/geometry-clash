@@ -11,4 +11,10 @@ public class GameManager : GameSingleton<GameManager>
     /// Whether game is in debug mode
     /// </summary>
     public bool DebugMode = true;
+
+    [Header("Game Objects")]
+    /// <summary>
+    /// Player instance
+    /// </summary>
+    public Player Player;
 }

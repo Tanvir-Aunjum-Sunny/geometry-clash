@@ -9,7 +9,9 @@ public class Projectile : ExtendedMonoBehaviour
     public float MAX_PROJECTILE_DISTANCE = 100f;
     public float MAX_PROJECTILE_LIFETIME = 10f;
     public ProjectileData Data;
+    public LayerMask CollisionMask;
 
+    // TODO: Use origin for damage falloff
     private Vector3 origin;
 
 
@@ -29,6 +31,8 @@ public class Projectile : ExtendedMonoBehaviour
 
     void Update()
     {
+        float frameMoveDistance = Data.Speed * Time.deltaTime;
+
         // Projectiles can have limited range (semi-unusual)
         float distanceCap = Data.HasMaxRange ? Mathf.Min(Data.MaxRange, MAX_PROJECTILE_DISTANCE) : MAX_PROJECTILE_DISTANCE;
         float distanceTravelled = Vector3.Distance(origin, transform.position);
@@ -39,7 +43,17 @@ public class Projectile : ExtendedMonoBehaviour
             return;
         }
 
-        transform.Translate(Vector3.forward * Data.Speed * Time.deltaTime);
+        // Check collisions safely by raycasting (prevents clipping through obstacles).
+        //   If a collision will happen within the frame move to within collision distance.
+        float distanceToCollision;
+        if (CheckCollisions(frameMoveDistance, out distanceToCollision))
+        {
+            transform.Translate(Vector3.forward * distanceToCollision);
+        }
+        else
+        {
+            transform.Translate(Vector3.forward * frameMoveDistance);
+        }
 
         if (GameManager.Instance.DebugMode)
         {
@@ -54,6 +68,12 @@ public class Projectile : ExtendedMonoBehaviour
     /// <param name="collider">Colliding entity</param>
     private void OnCollisionEnter(Collision collider)
     {
+        // Only detect collisions on appropriate layers
+        if (!UnityExtensions.LayerContains(CollisionMask, collider.gameObject.layer))
+        {
+            return;
+        }
+
         // TODO: Trigger damage
 
         AudioManager.Instance.PlayEffect(Data.HitSound, transform.position);
@@ -66,6 +86,25 @@ public class Projectile : ExtendedMonoBehaviour
         DestroyProjectile();
     }
 
+
+    /// <summary>
+    /// Check whether a collision will occur in the frame
+    /// </summary>
+    /// <param name="frameDistance">Distance that will be moved in frame</param>
+    public bool CheckCollisions(float frameDistance, out float hitDistance)
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, frameDistance, CollisionMask))
+        {
+            hitDistance = hit.distance;
+            return true;
+        }
+
+        hitDistance = 0;
+        return false;
+    }
 
     /// <summary>
     /// Destroy fired projectile
