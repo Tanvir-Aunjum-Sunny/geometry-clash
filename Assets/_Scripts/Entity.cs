@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class Entity : ExtendedMonoBehaviour, IDamageable
     public float Health = 10f;
     public float MaxHealth = 10f;
     public bool IsAlive = true;
+
+    // TODO: Move into enemy class?
+    public event Action OnDeath;
 
 
     /// <summary>
@@ -30,6 +34,8 @@ public class Entity : ExtendedMonoBehaviour, IDamageable
     public virtual void Die()
     {
         IsAlive = false;
+
+        OnDeath?.Invoke();
 
         // TODO: Should this happen for all game objects?
         Destroy(gameObject);

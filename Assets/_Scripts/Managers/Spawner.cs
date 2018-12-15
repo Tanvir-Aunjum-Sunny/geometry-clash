@@ -18,7 +18,8 @@ public class Spawner : ExtendedMonoBehaviour
 
     private Wave wave;
     private Coroutine spawnRoutine;
-    private int remainingEnemies;
+    private int enemiesRemainingInWave;
+    private int enemiesRemainingToSpawn;
     private int waveNumber;
 
     
@@ -38,10 +39,13 @@ public class Spawner : ExtendedMonoBehaviour
     /// </summary>
     private void NextWave()
     {
-        waveNumber++;
+        // Prevent exceeding number of waves
+        if (++waveNumber > Waves.Count) return;
+
         wave = Waves[waveNumber - 1];
 
-        remainingEnemies = wave.Enemies;
+        enemiesRemainingToSpawn = wave.Enemies;
+        enemiesRemainingInWave = enemiesRemainingToSpawn;
 
         // Start next wave (after timeout)
         Wait(TimeBetweenWaves, () =>
@@ -51,20 +55,32 @@ public class Spawner : ExtendedMonoBehaviour
     }
 
     /// <summary>
-    /// Spawn an enemy
+    /// Respond to enemy death
+    /// </summary>
+    private void OnEnemyDeath()
+    {
+        enemiesRemainingInWave--;
+        if (enemiesRemainingInWave > 0) return;
+
+        // Next wave starts immediately after last enemy death
+        NextWave();
+    }
+
+    /// <summary>
+    /// Spawn enemies while a wave lasts
     /// </summary>
     private IEnumerator SpawnEnemy()
     {
-        while (remainingEnemies > 0)
+        while (enemiesRemainingToSpawn > 0)
         {
-            remainingEnemies--;
+            enemiesRemainingToSpawn--;
 
             Enemy spawnedEnemy = Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity);
+            spawnedEnemy.OnDeath += OnEnemyDeath;
 
             yield return new WaitForSeconds(wave.TimeBetweenSpawns);
         }
 
         StopCoroutine(spawnRoutine);
-        yield return null;
     }
 }
