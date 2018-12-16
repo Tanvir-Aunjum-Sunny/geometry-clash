@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 3290832900702524810}
   - component: {fileID: 3290832900702524813}
   - component: {fileID: 3290832900702524812}
+  - component: {fileID: 6061833836369537315}
   - component: {fileID: 551309822}
   m_Layer: 0
   m_Name: Player
@@ -268,6 +269,30 @@ MonoBehaviour:
     RunKey: 304
   Mouse:
     RotationSlerpRatio: 15
+--- !u!114 &6061833836369537315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290832900702525043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2799ac375008d84f9afb0af2fffd974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 10
+  MaxHealth: 10
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &551309822
 MonoBehaviour:
   m_ObjectHideFlags: 0

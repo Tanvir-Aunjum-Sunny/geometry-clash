@@ -15,6 +15,7 @@ public class Spawner : ExtendedMonoBehaviour
     public int TimeBetweenWaves = 2;
     public List<Wave> Waves = new List<Wave>();
     public Enemy EnemyPrefab;
+    public Transform SpawnedChildren;
 
     private Wave wave;
     private Coroutine spawnRoutine;
@@ -74,8 +75,11 @@ public class Spawner : ExtendedMonoBehaviour
         {
             enemiesRemainingToSpawn--;
 
-            Enemy spawnedEnemy = Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity);
-            spawnedEnemy.OnDeath += OnEnemyDeath;
+            // Enemy spawnedEnemy = Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity);
+            Enemy spawnedEnemy = Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity, SpawnedChildren);
+
+            // Subscribe to death event
+            spawnedEnemy.Damageable.OnDeath += OnEnemyDeath;
 
             yield return new WaitForSeconds(wave.TimeBetweenSpawns);
         }

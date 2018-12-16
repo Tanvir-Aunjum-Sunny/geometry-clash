@@ -9090,6 +9090,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 6752697665756664245, guid: 28125845840a4eb479d717c64354ab58,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6752697665756664246, guid: 28125845840a4eb479d717c64354ab58,
         type: 3}
       propertyPath: m_LocalPosition.x

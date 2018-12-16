@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Damageable))]
 [RequireComponent(typeof(Rigidbody))]
-public class Player : Entity
+public class Player : ExtendedMonoBehaviour
 {
+    [ReadOnly] public Damageable Damageable;
+
     private Rigidbody rb;
     private Vector3 velocity;
     private Vector3 lookPoint;
@@ -12,6 +15,7 @@ public class Player : Entity
 
     protected void Start()
     {
+        Damageable = GetComponent<Damageable>();
         rb = GetComponent<Rigidbody>();
     }
 
