@@ -54,8 +54,8 @@ public class Gun : ExtendedMonoBehaviour
     {
         if (GameManager.Instance.DebugMode)
         {
-            // TODO: Figure out why this doesn't work well (rotation appears skewed)
-            Debug.DrawRay(firingTransform.position, firingTransform.position + firingTransform.forward * 10, Color.blue);
+            // Show direction gun is facing
+            Debug.DrawRay(firingTransform.position, firingTransform.forward * 10, Color.blue);
         }
     }
 
