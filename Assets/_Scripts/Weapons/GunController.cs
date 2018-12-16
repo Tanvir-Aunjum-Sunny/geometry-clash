@@ -109,8 +109,7 @@ public class GunController : ExtendedMonoBehaviour
         float equipDelay = skipEquipTime ? 0 : GunEquipTime;
         Wait(equipDelay, () =>
         {
-            equippedGun = Instantiate(gunToEquip, weaponTransform.position, weaponTransform.rotation);
-            equippedGun.transform.parent = weaponTransform;
+            equippedGun = Instantiate(gunToEquip, weaponTransform.position, weaponTransform.rotation, weaponTransform);
 
             state = GunControllerState.READY;
         });

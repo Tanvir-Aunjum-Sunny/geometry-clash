@@ -81,7 +81,8 @@ public class Gun : ExtendedMonoBehaviour
         GameObject bullet = Instantiate(
             projectilePrefab,
             firingTransform.position,
-            firingTransform.rotation
+            firingTransform.rotation,
+            TemporaryManager.Instance.TemporaryChildren
         );
 
         Projectile projectile = projectilePrefab.GetComponent<Projectile>();
