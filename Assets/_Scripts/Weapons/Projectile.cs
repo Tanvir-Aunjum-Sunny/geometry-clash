@@ -86,7 +86,7 @@ public class Projectile : ExtendedMonoBehaviour
         {
             if (Data.HitEffect != null)
             {
-                Instantiate(Data.HitEffect, transform.position, Quaternion.identity);
+                Instantiate(Data.HitEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);
             }
 
             // QUESTION: Should audio be moved to hit object (in "Hit-able" component)?
