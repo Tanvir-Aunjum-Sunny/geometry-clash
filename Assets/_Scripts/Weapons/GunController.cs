@@ -38,7 +38,7 @@ public class GunController : ExtendedMonoBehaviour
     private void Start()
     {
         // Equip first gun if none is equipped
-        if (equippedGun == null && guns.Count > 0)
+        if (!hasGunEquipped && guns.Count > 0)
         {
             EquipGun(guns[0], true);
         }
@@ -60,7 +60,7 @@ public class GunController : ExtendedMonoBehaviour
         // Other gun actions
         else if (hasGunEquipped && state == GunControllerState.READY)
         {
-            // Fire weapon
+            // Fire weapon differently depending on type
             if (equippedGun.Data.Type == GunType.AUTOMATIC)
             {
                 if (Input.GetMouseButton(0))
