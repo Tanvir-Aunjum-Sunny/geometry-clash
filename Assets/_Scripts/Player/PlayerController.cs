@@ -45,6 +45,8 @@ public class PlayerController : ExtendedMonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (GameManager.Instance == null || !GameManager.Instance.DebugMode) return;
+
         // Show mouse position
         Gizmos.color = new Color(239, 193, 186);
         Gizmos.DrawSphere(mousePoint, 0.15f);
