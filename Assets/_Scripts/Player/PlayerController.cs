@@ -21,20 +21,13 @@ public class PlayerController : ExtendedMonoBehaviour
     {
         // Rotate player to match mouse target
         // NOTE: May need to be updated if more than one level (height)
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane ground = new Plane(Vector3.up, Vector3.zero);
-        float rayDistance;
+        mousePoint = MouseUtils.GetMouseLookPoint();
+        player.LookAt(mousePoint);
 
-        // Player should always look at mouse point
-        if (ground.Raycast(ray, out rayDistance))
+        if (GameManager.Instance.DebugMode)
         {
-            mousePoint = ray.GetPoint(rayDistance);
-            player.LookAt(mousePoint);
-
-            if (GameManager.Instance.DebugMode)
-            {
-                Debug.DrawLine(ray.origin, mousePoint, Color.yellow);
-            }
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawLine(ray.origin, mousePoint, Color.yellow);
         }
 
         // Player movement

@@ -248,9 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6826dfce6fb040d4daeea294676a1ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 10
-  MaxHealth: 10
-  IsAlive: 1
+  Damageable: {fileID: 0}
 --- !u!114 &3290832900702524812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,16 +281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   MaxHealth: 10
-  OnDamage:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &551309822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunEquipTime: 1
   reloadKey: 114
+  parentTransform: {fileID: 3290832900702524815}
   weaponTransform: {fileID: 1861551788}
   equippedGun: {fileID: 0}
   guns:
