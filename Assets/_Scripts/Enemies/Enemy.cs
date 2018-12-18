@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(Damageable))]
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : Entity
+public class Enemy : ExtendedMonoBehaviour
 {
     [Range(0, 1)]
     public float AgentPathRefreshRate = 0.25f;
+
+    [ReadOnly] public Damageable Damageable;
 
     private Transform target;
     private NavMeshAgent pathfinder;
 
 
-    protected void Start()
+    void Awake()
     {
+        Damageable = GetComponent<Damageable>();
         pathfinder = GetComponent<NavMeshAgent>();
         target = GameManager.Instance.Player.transform;
+    }
 
+    void Start()
+    {
         StartCoroutine(UpdateAgentPath());
     }
 
@@ -30,7 +37,7 @@ public class Enemy : Entity
     {
         while (target != null)
         {
-            if (!IsAlive) yield return null;
+            if (!Damageable.IsAlive) yield return null;
 
             Vector3 targetPosition = new Vector3(target.position.x, 0, target.position.z);
             pathfinder.SetDestination(targetPosition);

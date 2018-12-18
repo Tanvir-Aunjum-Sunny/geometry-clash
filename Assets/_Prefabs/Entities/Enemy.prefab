@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 3290832900702524810}
   - component: {fileID: 258308240}
   - component: {fileID: 258308241}
+  - component: {fileID: 4996567542639011522}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Player
@@ -215,9 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22f9a068c014464ebda686c73e71c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 10
-  MaxHealth: 10
   AgentPathRefreshRate: 0.25
+  Damageable: {fileID: 0}
 --- !u!195 &258308241
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -240,6 +240,30 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4996567542639011522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290832900702525043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2799ac375008d84f9afb0af2fffd974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 10
+  MaxHealth: 10
+  OnDamageUnity:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDeathUnity:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &6710568296725800251
 GameObject:
   m_ObjectHideFlags: 0
