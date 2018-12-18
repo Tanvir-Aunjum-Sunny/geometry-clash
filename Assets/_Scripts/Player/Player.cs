@@ -8,6 +8,8 @@ public class Player : ExtendedMonoBehaviour
 {
     [ReadOnly] public Damageable Damageable;
 
+    [SerializeField] private Crosshair crosshair;
+
     private Rigidbody rb;
     private Vector3 velocity;
     private Vector3 lookPoint;
@@ -24,6 +26,9 @@ public class Player : ExtendedMonoBehaviour
         // Look towards mouse target (but keep player looking horizontally)
         Vector3 correctedLookPoint = new Vector3(lookPoint.x, transform.position.y, lookPoint.z);
         transform.LookAt(correctedLookPoint);
+
+        // Crosshair targets the look point
+        crosshair.transform.position = lookPoint;
     }
 
     private void FixedUpdate()

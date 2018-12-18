@@ -17,8 +17,19 @@ public abstract class MouseUtils
     /// <returns>Mouse look point</returns>
     public static Vector3 GetMouseLookPoint()
     {
+        return GetMouseLookPoint(0);
+    }
+
+    /// <summary>
+    /// Get the mouse look point on a given z-plane
+    /// </summary>
+    /// <param name="planeZPosition">Z-level for mouse point plane</param>
+    /// <returns>Mouse look point</returns>
+    public static Vector3 GetMouseLookPoint(float planeZPosition)
+    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane ground = new Plane(Vector3.up, Vector3.zero);
+        Vector3 planeInPoint = new Vector3(0, 0, planeZPosition);
+        Plane ground = new Plane(Vector3.up, planeInPoint);
         float rayDistance;
 
         // QUESTION: What happens if there is no raycast (should always be with plane)?

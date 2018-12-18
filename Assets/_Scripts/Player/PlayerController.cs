@@ -20,8 +20,7 @@ public class PlayerController : ExtendedMonoBehaviour
     void Update()
     {
         // Rotate player to match mouse target
-        // NOTE: May need to be updated if more than one level (height)
-        mousePoint = MouseUtils.GetMouseLookPoint();
+        mousePoint = MouseUtils.GetMouseLookPoint(player.transform.position.z);
         player.LookAt(mousePoint);
 
         if (GameManager.Instance.DebugMode)
