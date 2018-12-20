@@ -28,12 +28,16 @@ public class Gun : ExtendedMonoBehaviour
 {
     public GunData Data;
 
-    [SerializeField] private int bulletsInClip;
+    [SerializeField]
+    private int bulletsInClip;
 
     [Header("Miscellaneous")]
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Transform firingTransform;
-    [SerializeField] private ParticleSystem shellParticle;
+    [SerializeField]
+    private GameObject projectilePrefab;
+    [SerializeField]
+    private Transform firingTransform;
+    [SerializeField]
+    private ParticleSystem shellParticle;
 
     private GunState state;
 
@@ -77,11 +81,14 @@ public class Gun : ExtendedMonoBehaviour
             return;
         }
 
-        // TODO: Figure out how to set a parent to avoid cluttering editor UI (although they are deleted...)
+        // Some weapons have a spread angle range while firing (typically automatics)
+        float spreadAngle = Random.Range(-Data.SpreadAngle, Data.SpreadAngle);
+        Quaternion projectileSpreadRotation = firingTransform.rotation * Quaternion.Euler(0, spreadAngle, 0);
+
         GameObject bullet = Instantiate(
             projectilePrefab,
             firingTransform.position,
-            firingTransform.rotation,
+            projectileSpreadRotation,
             TemporaryManager.Instance.TemporaryChildren
         );
 

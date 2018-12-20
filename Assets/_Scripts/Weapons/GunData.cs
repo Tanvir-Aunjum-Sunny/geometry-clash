@@ -13,6 +13,8 @@ public class GunData : ScriptableObject
     public float FireRate = 0.5f;
     public float ReloadTime = 1.5f;
     public int ClipSize = 10;
+    [Range(0, 10f)]
+    public float SpreadAngle = 0f;
     public GunType Type;
 
     [Header("Effects")]
