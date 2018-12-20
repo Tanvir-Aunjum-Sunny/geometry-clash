@@ -218,6 +218,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AgentPathRefreshRate: 0.25
   Damageable: {fileID: 0}
+  state: 0
+  attackDistanceThreshold: 2
+  timeBetweenAttacks: 2
+  attackColor: {r: 1, g: 0, b: 0.34520102, a: 1}
 --- !u!195 &258308241
 NavMeshAgent:
   m_ObjectHideFlags: 0

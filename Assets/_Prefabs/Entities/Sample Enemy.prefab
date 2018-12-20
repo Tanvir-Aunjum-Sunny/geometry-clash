@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2608708597652780826}
   - component: {fileID: 2608708597652780827}
   - component: {fileID: 2608708597652780836}
+  - component: {fileID: 8707926944717359350}
   - component: {fileID: 2608708597652780837}
   - component: {fileID: 2608708597652780824}
   - component: {fileID: 2608708597652780830}
@@ -95,6 +96,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &8707926944717359350
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2608708597652780838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2608708597652780837
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,6 +159,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AgentPathRefreshRate: 0
   Damageable: {fileID: 0}
+  state: 0
+  attackDistanceThreshold: 2
+  timeBetweenAttacks: 1
 --- !u!195 &2608708597652780831
 NavMeshAgent:
   m_ObjectHideFlags: 0
