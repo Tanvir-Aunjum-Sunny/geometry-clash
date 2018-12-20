@@ -257,6 +257,8 @@ MonoBehaviour:
   DamageEffect: {fileID: 5086290544717913756, guid: 53379fb0b585dfd41b4363b81e2be5dd,
     type: 3}
   DamageSound: {fileID: 8300000, guid: cb48f31dabefdea40bc6459a69f88497, type: 3}
+  DeathEffect: {fileID: 5086290544717913756, guid: 440f390d9c56f714da4ae5be2e09ab7d,
+    type: 3}
 --- !u!1 &6710568296725800251
 GameObject:
   m_ObjectHideFlags: 0

@@ -8183,11 +8183,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sample Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 2608708597652780838, guid: 3b2c2cdf3c7672b47b58cbc0f5161f87,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2608708597652780825, guid: 3b2c2cdf3c7672b47b58cbc0f5161f87,
         type: 3}
       propertyPath: m_LocalPosition.x

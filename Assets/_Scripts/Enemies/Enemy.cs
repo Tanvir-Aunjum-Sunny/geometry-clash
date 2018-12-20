@@ -37,7 +37,10 @@ public class Enemy : ExtendedMonoBehaviour
     /// <param name="killer">Object causing death</param>
     private void OnDeath(GameObject killer)
     {
-        print("dead");
+        if (Damageable.DeathEffect != null)
+        {
+            Instantiate(Damageable.DeathEffect, killer.gameObject.transform.position, Quaternion.AngleAxis(90, killer.gameObject.transform.right), TemporaryManager.Instance.TemporaryChildren);
+        }
     }
 
     /// <summary>

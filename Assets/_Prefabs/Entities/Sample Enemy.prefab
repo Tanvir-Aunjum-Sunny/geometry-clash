@@ -123,11 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2799ac375008d84f9afb0af2fffd974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 50
-  MaxHealth: 50
+  Health: 10
+  MaxHealth: 10
   DamageEffect: {fileID: 5086290544717913756, guid: 53379fb0b585dfd41b4363b81e2be5dd,
     type: 3}
   DamageSound: {fileID: 8300000, guid: cb48f31dabefdea40bc6459a69f88497, type: 3}
+  DeathEffect: {fileID: 5086290544717913756, guid: 440f390d9c56f714da4ae5be2e09ab7d,
+    type: 3}
 --- !u!114 &2608708597652780830
 MonoBehaviour:
   m_ObjectHideFlags: 0
