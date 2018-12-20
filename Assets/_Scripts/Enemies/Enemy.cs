@@ -21,6 +21,8 @@ public class Enemy : ExtendedMonoBehaviour
         Damageable = GetComponent<Damageable>();
         pathfinder = GetComponent<NavMeshAgent>();
         target = GameManager.Instance.Player.transform;
+
+        Damageable.OnDeath += OnDeath;
     }
 
     void Start()
@@ -28,6 +30,15 @@ public class Enemy : ExtendedMonoBehaviour
         StartCoroutine(UpdateAgentPath());
     }
 
+
+    /// <summary>
+    /// Enemy death
+    /// </summary>
+    /// <param name="killer">Object causing death</param>
+    private void OnDeath(GameObject killer)
+    {
+        print("dead");
+    }
 
     /// <summary>
     /// Update navmesh agent path infrequently (performance)

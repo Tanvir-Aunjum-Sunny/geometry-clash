@@ -125,9 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 50
   MaxHealth: 50
-  HitEffect: {fileID: 5086290544717913756, guid: 53379fb0b585dfd41b4363b81e2be5dd,
+  DamageEffect: {fileID: 5086290544717913756, guid: 53379fb0b585dfd41b4363b81e2be5dd,
     type: 3}
-  HitSound: {fileID: 8300000, guid: cb48f31dabefdea40bc6459a69f88497, type: 3}
+  DamageSound: {fileID: 8300000, guid: cb48f31dabefdea40bc6459a69f88497, type: 3}
 --- !u!114 &2608708597652780830
 MonoBehaviour:
   m_ObjectHideFlags: 0

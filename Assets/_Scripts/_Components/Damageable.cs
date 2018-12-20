@@ -8,12 +8,15 @@ public class Damageable : ExtendedMonoBehaviour
     public bool IsAlive { get; private set; } = true;
     public float Health = 10f;
     public float MaxHealth = 10f;
-    public GameObject HitEffect;
-    public AudioClip HitSound;
+
+    [Header("Effects")]
+    public GameObject DamageEffect;
+    public AudioClip DamageSound;
+    public GameObject DeathEffect;
 
     #region Events
-    public Action<float> OnDamage;
-    public Action OnDeath;
+    public Action<float, GameObject> OnDamage;
+    public Action<GameObject> OnDeath;
     #endregion
 
 
@@ -27,19 +30,20 @@ public class Damageable : ExtendedMonoBehaviour
         if (!IsAlive) return;
 
         // Raise OnDamage event
-        OnDamage?.Invoke(damage);
+        OnDamage?.Invoke(damage, damager);
 
         Health -= damage;
         if (Health <= 0)
         {
-            Die();
+            Die(damager);
         }
     }
 
     /// <summary>
     /// Kill a damageable object
+    /// <param name="killer">Object causing death</param>
     /// </summary>
-    public void Die()
+    public void Die(GameObject killer)
     {
         if (!IsAlive) return;
 
@@ -47,7 +51,7 @@ public class Damageable : ExtendedMonoBehaviour
         Health = 0f;
 
         // Raise OnDeath event
-        OnDeath?.Invoke();
+        OnDeath?.Invoke(killer);
 
         Destroy(gameObject);
     }

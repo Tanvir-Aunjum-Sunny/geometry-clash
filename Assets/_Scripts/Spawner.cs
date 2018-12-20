@@ -57,8 +57,9 @@ public class Spawner : ExtendedMonoBehaviour
 
     /// <summary>
     /// Respond to enemy death
+    /// <param name="damager">Object inflicting damage</param>
     /// </summary>
-    private void OnEnemyDeath()
+    private void OnEnemyDeath(GameObject damager)
     {
         if (--enemiesRemainingInWave > 0) return;
 

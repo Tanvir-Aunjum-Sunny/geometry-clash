@@ -80,12 +80,17 @@ public class Projectile : ExtendedMonoBehaviour
             damageableObject.TakeDamage(Data.Damage, gameObject);
         }
 
+        // TODO: Does this logic belong in Damageable component?
         // Enemies react differently to being hit
         Enemy enemy = collider.gameObject.GetComponent<Enemy>();
         if (enemy == null)
         {
             if (Data.HitEffect != null)
             {
+                // Use collider material for hit effect
+                Material collidingMaterial = collider.gameObject.GetComponent<Renderer>().material;
+                Data.HitEffect.gameObject.GetComponent<Renderer>().material = collidingMaterial;
+
                 Instantiate(Data.HitEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);
             }
 
@@ -94,12 +99,16 @@ public class Projectile : ExtendedMonoBehaviour
         }
         else
         {
-            if (enemy.Damageable.HitEffect != null)
+            if (enemy.Damageable.DamageEffect != null)
             {
-                Instantiate(enemy.Damageable.HitEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);
+                // Use collider material for hit effect
+                Material collidingMaterial = collider.gameObject.GetComponent<Renderer>().material;
+                enemy.Damageable.DamageEffect.GetComponent<Renderer>().material = collidingMaterial;
+
+                Instantiate(enemy.Damageable.DamageEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);
             }
 
-            AudioManager.Instance.PlayEffect(enemy.Damageable.HitSound, transform.position);
+            AudioManager.Instance.PlayEffect(enemy.Damageable.DamageSound, transform.position);
         }
 
         Destroy(gameObject);
