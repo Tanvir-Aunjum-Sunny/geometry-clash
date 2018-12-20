@@ -254,16 +254,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   MaxHealth: 10
-  OnDamageUnity:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  OnDeathUnity:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &6710568296725800251
 GameObject:
   m_ObjectHideFlags: 0

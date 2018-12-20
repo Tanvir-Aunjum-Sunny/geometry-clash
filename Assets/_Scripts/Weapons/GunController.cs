@@ -19,12 +19,17 @@ public class GunController : ExtendedMonoBehaviour
 {
     public float GunEquipTime = 1f;
 
-    [SerializeField] private KeyCode reloadKey = KeyCode.R;
+    [SerializeField]
+    private KeyCode reloadKey = KeyCode.R;
     
     [Header("Guns")]
-    [SerializeField] private Transform weaponTransform;
-    [SerializeField] private Gun equippedGun;
-    [SerializeField] private List<Gun> guns = new List<Gun>();
+    [SerializeField]
+    private Transform weaponTransform;
+    [SerializeField]
+    [ReadOnly]
+    private Gun equippedGun;
+    [SerializeField]
+    private List<Gun> guns = new List<Gun>();
 
     private GunControllerState state = GunControllerState.READY;
     private int equippedGunIndex;

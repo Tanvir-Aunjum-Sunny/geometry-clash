@@ -5,8 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerController : ExtendedMonoBehaviour
 {
-    [SerializeField] private CharacterMovementSettings Movement;
-    [SerializeField] private CharacterMouseSettings Mouse;
+    [SerializeField]
+    private CharacterMovementSettings movement;
+    [SerializeField]
+    private CharacterMouseSettings mouse;
+    [SerializeField]
+    private Crosshair crosshair;
 
     private Player player;
     private Vector3 velocity;
@@ -20,8 +24,11 @@ public class PlayerController : ExtendedMonoBehaviour
     void Update()
     {
         // Rotate player to match mouse target
-        mousePoint = MouseUtils.GetMouseLookPoint(player.transform.position.z);
+        mousePoint = MouseUtils.GetMouseLookPoint(player.transform.position.y);
         player.LookAt(mousePoint);
+
+        // Crosshair targets the look point
+        crosshair.transform.position = mousePoint;
 
         if (GameManager.Instance.DebugMode)
         {
@@ -31,7 +38,7 @@ public class PlayerController : ExtendedMonoBehaviour
 
         // Player movement
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        velocity = Movement.GetTargetVelocity(moveInput.normalized);
+        velocity = movement.GetTargetVelocity(moveInput.normalized);
         player.Move(velocity);
     }
 

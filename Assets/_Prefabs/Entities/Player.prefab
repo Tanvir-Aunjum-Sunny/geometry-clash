@@ -249,7 +249,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damageable: {fileID: 0}
-  crosshair: {fileID: 0}
 --- !u!114 &3290832900702524812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,12 +261,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74d218da41bd664abc3e56ef0cc09a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Movement:
+  movement:
     Speed: 5
     RunMultiplier: 2
     RunKey: 304
-  Mouse:
+  mouse:
     RotationSlerpRatio: 15
+  crosshair: {fileID: 0}
 --- !u!114 &6061833836369537315
 MonoBehaviour:
   m_ObjectHideFlags: 0

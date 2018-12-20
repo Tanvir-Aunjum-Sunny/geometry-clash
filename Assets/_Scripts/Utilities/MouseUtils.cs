@@ -21,14 +21,14 @@ public abstract class MouseUtils
     }
 
     /// <summary>
-    /// Get the mouse look point on a given z-plane
+    /// Get the mouse look point on a given y-plane
     /// </summary>
-    /// <param name="planeZPosition">Z-level for mouse point plane</param>
+    /// <param name="planeYPosition">Y-level for mouse point plane</param>
     /// <returns>Mouse look point</returns>
-    public static Vector3 GetMouseLookPoint(float planeZPosition)
+    public static Vector3 GetMouseLookPoint(float planeYPosition)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Vector3 planeInPoint = new Vector3(0, 0, planeZPosition);
+        Vector3 planeInPoint = new Vector3(0, planeYPosition, 0);
         Plane ground = new Plane(Vector3.up, planeInPoint);
         float rayDistance;
 

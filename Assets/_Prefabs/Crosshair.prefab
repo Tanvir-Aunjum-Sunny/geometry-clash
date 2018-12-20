@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9170988378390248779}
   - component: {fileID: 1420173397557950181}
+  - component: {fileID: 3273530387800761617}
   - component: {fileID: 4235056464167709319}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,6 +82,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!135 &3273530387800761617
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739317891758773473}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4235056464167709319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,7 +107,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f00d7528f30843899360babb7c549cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 1
+  RotationSpeed: 0.5
+  source: {fileID: 0}
+  obscuringLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  initialCrosshairColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  invalidCrosshairColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0.3137255}
+  dot: {fileID: 8526653116379349651}
+  initialDotColor: {r: 0, g: 0, b: 0, a: 0.5882353}
+  invalidDotColor: {r: 0.9339623, g: 0.8141371, b: 0.374466, a: 0.78431374}
+  targetDotColor: {r: 0.9528302, g: 0.09438412, b: 0.17389372, a: 1}
 --- !u!1 &8526653116379349651
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2068008906255816490}
   - component: {fileID: 7616417794850579550}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +190,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e4da75bd893434b8fb5208dc654374a3, type: 3}
-  m_Color: {r: 0.627451, g: 1, b: 0.972232, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
