@@ -77,12 +77,12 @@ public class Projectile : ExtendedMonoBehaviour
         Damageable damageableObject = collider.gameObject.GetComponent<Damageable>();
         if (damageableObject != null)
         {
-            damageableObject.TakeDamage(Data.Damage);
+            damageableObject.TakeDamage(Data.Damage, gameObject);
         }
 
         // Enemies react differently to being hit
-        bool didHitEnemy = collider.gameObject.GetComponent<Enemy>();
-        if (!didHitEnemy)
+        Enemy enemy = collider.gameObject.GetComponent<Enemy>();
+        if (enemy == null)
         {
             if (Data.HitEffect != null)
             {
@@ -91,6 +91,15 @@ public class Projectile : ExtendedMonoBehaviour
 
             // QUESTION: Should audio be moved to hit object (in "Hit-able" component)?
             AudioManager.Instance.PlayEffect(Data.HitSound, transform.position);
+        }
+        else
+        {
+            if (enemy.Damageable.HitEffect != null)
+            {
+                Instantiate(enemy.Damageable.HitEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);
+            }
+
+            AudioManager.Instance.PlayEffect(enemy.Damageable.HitSound, transform.position);
         }
 
         Destroy(gameObject);

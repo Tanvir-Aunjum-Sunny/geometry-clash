@@ -2,26 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Damageable : ExtendedMonoBehaviour
 {
     public bool IsAlive { get; private set; } = true;
     public float Health = 10f;
     public float MaxHealth = 10f;
+    public GameObject HitEffect;
+    public AudioClip HitSound;
 
     #region Events
     public Action<float> OnDamage;
     public Action OnDeath;
-
-    // [Serializable]
-    // public class DamageEvent : UnityEvent<float> { }
-    // public DamageEvent OnDamageUnity;
-    // public UnityEvent OnDeathUnity;
     #endregion
 
 
-    public void TakeDamage(float damage)
+    /// <summary>
+    /// Take damage from a source
+    /// </summary>
+    /// <param name="damage">Amount of damage</param>
+    /// <param name="damager">Object inflicting damage</param>
+    public void TakeDamage(float damage, GameObject damager)
     {
         if (!IsAlive) return;
 
@@ -35,6 +36,9 @@ public class Damageable : ExtendedMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Kill a damageable object
+    /// </summary>
     public void Die()
     {
         if (!IsAlive) return;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5086290544717913746}
   - component: {fileID: 5086290544717913747}
   m_Layer: 0
-  m_Name: BulletSplat
+  m_Name: EnemyDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -975,7 +975,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 15
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -3754,7 +3754,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 3584
+      m_Bits: 2560
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -4730,8 +4730,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 376fb7ff8c0e64d639a6d9bbac32c3b7, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 96615ca1837994337b8a5563036f7b05, type: 2}
+  - {fileID: 2100000, guid: 96615ca1837994337b8a5563036f7b05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

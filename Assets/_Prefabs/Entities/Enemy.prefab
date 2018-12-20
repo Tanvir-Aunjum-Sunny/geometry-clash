@@ -254,6 +254,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   MaxHealth: 10
+  HitEffect: {fileID: 5086290544717913756, guid: 53379fb0b585dfd41b4363b81e2be5dd,
+    type: 3}
+  HitSound: {fileID: 8300000, guid: cb48f31dabefdea40bc6459a69f88497, type: 3}
 --- !u!1 &6710568296725800251
 GameObject:
   m_ObjectHideFlags: 0
