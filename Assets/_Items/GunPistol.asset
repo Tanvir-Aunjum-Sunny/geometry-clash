@@ -15,6 +15,7 @@ MonoBehaviour:
   FireRate: 0.1
   ReloadTime: 1.5
   ClipSize: 10
+  SpreadAngle: 0.5
   Type: 3
   FireEffect: {fileID: 0}
   FireSound: {fileID: 8300000, guid: b62ae8947e120bc41a59e76f2b53c733, type: 3}
