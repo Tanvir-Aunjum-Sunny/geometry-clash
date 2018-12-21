@@ -72,13 +72,13 @@ public class Enemy : ExtendedMonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         collisionRadius = GetComponent<CapsuleCollider>().radius;
         skinMaterial = GetComponent<Renderer>().material;
-        originalSkinColor = skinMaterial.color;
         wanderer = GetComponent<Wanderer>();
     }
 
     void Start()
     {
         state = EnemyState.PURSUING;
+        originalSkinColor = skinMaterial.color;
 
         // Enemy (own) death
         Damageable.OnDeath += OnDeath;

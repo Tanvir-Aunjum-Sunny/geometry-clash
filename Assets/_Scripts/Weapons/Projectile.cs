@@ -16,15 +16,20 @@ public class Projectile : ExtendedMonoBehaviour
     // TODO: Use origin for damage falloff (distance-based)
     private Vector3 origin;
 
-    private void Awake()
+
+    void Start()
     {
         if (Data == null) Data = new ProjectileData();
 
         origin = transform.position;
-    }
 
-    void Start()
-    {
+        // Find all colliders projectile intersects with initiaally
+        Collider[] initialCollisions = Physics.OverlapSphere(transform.position, 0.1f, CollisionMask);
+        if (initialCollisions.Length > 0)
+        {
+            // TODO: Handle initial collisions
+        }
+
         // Projectiles can have limited lifetime (unusual)
         float lifetimeCap = Data.HasLifetime ? Mathf.Min(Data.MaxLifetime, MAX_PROJECTILE_LIFETIME) : MAX_PROJECTILE_LIFETIME;
         Wait(lifetimeCap, () =>
