@@ -8,12 +8,12 @@ using UnityEngine;
 /// </summary>
 public class Projectile : ExtendedMonoBehaviour
 {
-    public float MAX_PROJECTILE_DISTANCE = 100f;
-    public float MAX_PROJECTILE_LIFETIME = 10f;
     public ProjectileData Data;
     public LayerMask CollisionMask;
 
     // TODO: Use origin for damage falloff (distance-based)
+    private float MAX_PROJECTILE_DISTANCE = 100f;
+    private float MAX_PROJECTILE_LIFETIME = 10f;
     private Vector3 origin;
 
 

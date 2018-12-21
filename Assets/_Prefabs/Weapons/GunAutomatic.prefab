@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 8ad207f313101eb448da6f3c3ebd7448, type: 2}
   bulletsInClip: 0
-  projectilePrefab: {fileID: 5300741870640726553, guid: ec2178ca37e125848afe22fcb3e33d8d,
+  projectilePrefab: {fileID: 5300741870640726553, guid: b8aa34c300f69bf4d81351f5a9d53862,
     type: 3}
   firingTransform: {fileID: 4262131325114176896}
   shellParticle: {fileID: 1544117720178800694}

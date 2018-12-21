@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fce26dcb726934541a1ee8fc0b1e648d, type: 3}
-  m_Name: BulletPistol
+  m_Name: BulletAutomatic
   m_EditorClassIdentifier: 
-  Speed: 25
-  Damage: 5
+  Speed: 30
+  Damage: 3
   HasMaxRange: 1
-  MaxRange: 10
+  MaxRange: 30
   HasLifetime: 0
   MaxLifetime: 0
   HitEffect: {fileID: 5086290544717913756, guid: b6ba5f3c4926f410a97acd6b77d3b348,
