@@ -84,9 +84,9 @@ public class Enemy : ExtendedMonoBehaviour
         Damageable.OnDeath += OnDeath;
 
         // Target no longer be valid (or exist)
-        target = GameManager.Instance?.Player.transform;
-        if (target != null)
+        if (GameManager.Instance.Player != null)
         {
+            target = GameManager.Instance.Player.transform;
             hasTarget = true;
             targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
 
@@ -95,6 +95,11 @@ public class Enemy : ExtendedMonoBehaviour
 
             // Path to target is calculated sporadically for performance
             StartCoroutine(UpdateAgentPath());
+        }
+        else
+        {
+            // Enemy should wander if spawning after player death
+            wanderCoroutine = StartCoroutine(wanderer.Wander());
         }
     }
 
