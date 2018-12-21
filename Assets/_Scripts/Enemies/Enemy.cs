@@ -9,12 +9,15 @@ public enum EnemyState
     ATTACKING,
     DEAD,
     IDLE,
-    PURSUING
+    PURSUING,
+    RETREATING
 }
 
 
+[RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Damageable))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Rigidbody))]
 public class Enemy : ExtendedMonoBehaviour
 {
     [Range(0, 1)]
@@ -25,7 +28,12 @@ public class Enemy : ExtendedMonoBehaviour
     [ReadOnly]
     private EnemyState state;
 
+    // TODO: Move to ScriptableObject
     [Header("Attack")]
+    [SerializeField]
+    [Range(1, 5)]
+    private float attackDamage = 5f;
+    [SerializeField]
     [Range(1, 10)]
     private float lungeSpeed = 2f;
     [SerializeField]
@@ -37,10 +45,18 @@ public class Enemy : ExtendedMonoBehaviour
     [SerializeField]
     private Color attackColor = Color.red;
 
+    // Target
     private Transform target;
+    private Vector3 targetPosition;
+    private bool hasTarget = false;
+
+    // Components
+    private Rigidbody rigidbody;
     private Material skinMaterial;
     private Color originalSkinColor;
     private NavMeshAgent pathfinder;
+
+    private Coroutine attackCoroutine;
     private bool canAttack = true;
     private float collisionRadius;
     private float targetCollisionRadius;
@@ -48,11 +64,11 @@ public class Enemy : ExtendedMonoBehaviour
 
     void Awake()
     {
+        // Components
         Damageable = GetComponent<Damageable>();
         pathfinder = GetComponent<NavMeshAgent>();
-        target = GameManager.Instance.Player.transform;
+        rigidbody = GetComponent<Rigidbody>();
         collisionRadius = GetComponent<CapsuleCollider>().radius;
-        targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
         skinMaterial = GetComponent<Renderer>().material;
         originalSkinColor = skinMaterial.color;
     }
@@ -61,24 +77,38 @@ public class Enemy : ExtendedMonoBehaviour
     {
         state = EnemyState.PURSUING;
 
+        // Enemy (own) death
         Damageable.OnDeath += OnDeath;
 
-        StartCoroutine(UpdateAgentPath());
+        // Target no longer be valid (or exist)
+        target = GameManager.Instance.Player.transform;
+        if (target != null)
+        {
+            hasTarget = true;
+            targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
+
+            // Target death
+            target.GetComponent<Damageable>().OnDeath += OnTargetDeath;
+
+            // Path to target is calculated sporadically for performance
+            StartCoroutine(UpdateAgentPath());
+        }
     }
 
     private void Update()
     {
         if (!Damageable.IsAlive) return;
 
-        if (canAttack)
+        // Enemies cannot attack consecutively or while idle
+        if (hasTarget && canAttack && state != EnemyState.IDLE)
         {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
             distanceToTarget = distanceToTarget - collisionRadius - targetCollisionRadius;
 
-            // Proxmity to player triggers a lunge
+            // Lunge attack triggered by proxmity to player
             if (distanceToTarget <= attackDistanceThreshold)
             {
-                StartCoroutine(Attack());
+                attackCoroutine = StartCoroutine(Attack());
 
                 // Enemies can only attack after previous attack timeout
                 canAttack = false;
@@ -86,6 +116,32 @@ public class Enemy : ExtendedMonoBehaviour
                     canAttack = true;
                 });
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collider)
+    {
+        // Enemy can only do damage while attacking
+        if (state == EnemyState.ATTACKING)
+        {
+            // Apply damage to collider if appropriate
+            Damageable damageableObject = collider.gameObject.GetComponent<Damageable>();
+            if (damageableObject != null)
+            {
+                // Stop attack animation
+                state = EnemyState.RETREATING;
+
+                // QUESTION: Does this actually work well?
+                // Apply force away from collision
+                Vector3 moveDirection = (transform.position - damageableObject.transform.position).normalized;
+                rigidbody.AddForce(moveDirection * 50);
+
+                // Attack damage is dealt to both target and enemy
+                damageableObject.TakeDamage(attackDamage, gameObject);
+                Damageable.TakeDamage(attackDamage, collider.gameObject);
+            }
+
+            // TODO: Apply force to player
         }
     }
 
@@ -99,8 +155,21 @@ public class Enemy : ExtendedMonoBehaviour
         // Display death particle effect
         if (Damageable.DeathEffect != null)
         {
+            // TODO: Calculate death angle better
             Instantiate(Damageable.DeathEffect, killer.gameObject.transform.position, Quaternion.AngleAxis(90, killer.gameObject.transform.right), TemporaryManager.Instance.TemporaryChildren);
         }
+    }
+
+    /// <summary>
+    /// Player death stops target tracking
+    /// </summary>
+    /// <param name="target">Enemy target</param>
+    private void OnTargetDeath(GameObject target)
+    {
+        hasTarget = false;
+        state = EnemyState.IDLE;
+
+        // TODO: Enemy wander after death
     }
 
     /// <summary>
@@ -109,18 +178,21 @@ public class Enemy : ExtendedMonoBehaviour
     /// <returns>Coroutine</returns>
     private IEnumerator Attack()
     {
+        if (!hasTarget) yield return null;
+
         state = EnemyState.ATTACKING;
         pathfinder.enabled = false;
         skinMaterial.color = attackColor;
 
-        // Lunge towards target (with only fractional overlap to trigger damage)
+        // Calculate direction and position of lunge
         Vector3 originalPosition = transform.position;
         Vector3 attackDirection = (target.position - transform.position).normalized;
-        Vector3 attackPosition = target.position - attackDirection * (collisionRadius + targetCollisionRadius - 0.1f);
+        Vector3 attackPosition = target.position - attackDirection * (collisionRadius + targetCollisionRadius);
 
         float lungePercent = 0;
 
-        while (lungePercent < 1)
+        // Lunge towards target (lunge halts when collides with player)
+        while (lungePercent < 1 && state == EnemyState.ATTACKING)
         {
             lungePercent += Time.deltaTime * lungeSpeed;
             float interpolation = (-Mathf.Pow(lungePercent, 2) + lungePercent) * 4;
@@ -141,20 +213,31 @@ public class Enemy : ExtendedMonoBehaviour
     /// <returns>Coroutine</returns>
     private IEnumerator UpdateAgentPath()
     {
-        while (target != null)
+        while (hasTarget)
         {
             if (!Damageable.IsAlive) yield return null;
 
-            if (state != EnemyState.ATTACKING)
+            // Only update agent path while pursuing
+            if (state == EnemyState.PURSUING)
             {
                 // Move enemy towards player and within range of attack (but not into player collider)
                 Vector3 targetDirection = (target.position - transform.position).normalized;
-                Vector3 targetPosition = target.position - targetDirection * (collisionRadius + targetCollisionRadius + attackDistanceThreshold / 2);
+                float targetOffsetDistance = attackDistanceThreshold / 4;
+                targetPosition = target.position - targetDirection * (collisionRadius + targetCollisionRadius + targetOffsetDistance);
 
                 pathfinder.SetDestination(targetPosition);
             }
 
             yield return new WaitForSeconds(AgentPathRefreshRate);
         }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        if (GameManager.Instance == null || !GameManager.Instance.DebugMode) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(targetPosition, 0.25f);
     }
 }

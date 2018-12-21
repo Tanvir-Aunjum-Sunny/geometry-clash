@@ -76,7 +76,7 @@ public class Spawner : ExtendedMonoBehaviour
         {
             enemiesRemainingToSpawn--;
 
-            // Enemy spawnedEnemy = Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity);
+            // TODO: Calculate angle to target for initial enemy rotation
             Enemy spawnedEnemy = Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity, SpawnedChildren);
 
             // Subscribe to death event

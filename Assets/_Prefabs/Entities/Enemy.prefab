@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 3290832900702525041}
   - component: {fileID: 3290832900702525040}
   - component: {fileID: 3290832900702524810}
-  - component: {fileID: 258308240}
   - component: {fileID: 258308241}
+  - component: {fileID: 258308240}
   - component: {fileID: 4996567542639011522}
   m_Layer: 10
   m_Name: Enemy
@@ -204,24 +204,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &258308240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3290832900702525043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22f9a068c014464ebda686c73e71c8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AgentPathRefreshRate: 0.25
-  Damageable: {fileID: 0}
-  state: 0
-  attackDistanceThreshold: 2
-  timeBetweenAttacks: 2
-  attackColor: {r: 1, g: 0, b: 0.34520102, a: 1}
 --- !u!195 &258308241
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -244,6 +226,26 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &258308240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290832900702525043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22f9a068c014464ebda686c73e71c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AgentPathRefreshRate: 0.25
+  Damageable: {fileID: 0}
+  state: 0
+  attackDamage: 5
+  lungeSpeed: 2
+  attackDistanceThreshold: 1
+  timeBetweenAttacks: 2
+  attackColor: {r: 1, g: 0, b: 0.34520102, a: 1}
 --- !u!114 &4996567542639011522
 MonoBehaviour:
   m_ObjectHideFlags: 0

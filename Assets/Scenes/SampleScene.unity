@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657773, g: 0.49641353, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465776, g: 0.49641353, b: 0.57481766, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2489,6 +2489,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 126873122}
     m_Modifications:
+    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 5207118434230063911, guid: 2d61472141b430e4b869f8b935fa573b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2543,11 +2548,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
-        type: 3}
-      propertyPath: m_Name
-      value: Obstacle (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d61472141b430e4b869f8b935fa573b, type: 3}
@@ -2884,6 +2884,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 126873122}
     m_Modifications:
+    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 5207118434230063911, guid: 2d61472141b430e4b869f8b935fa573b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2938,11 +2943,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
-        type: 3}
-      propertyPath: m_Name
-      value: Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d61472141b430e4b869f8b935fa573b, type: 3}
@@ -3569,6 +3569,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 126873122}
     m_Modifications:
+    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 5207118434230063911, guid: 2d61472141b430e4b869f8b935fa573b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3623,11 +3628,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
-        type: 3}
-      propertyPath: m_Name
-      value: Obstacle (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d61472141b430e4b869f8b935fa573b, type: 3}
@@ -5854,6 +5854,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 126873122}
     m_Modifications:
+    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 5207118434230063911, guid: 2d61472141b430e4b869f8b935fa573b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5908,11 +5913,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836992505000533431, guid: 2d61472141b430e4b869f8b935fa573b,
-        type: 3}
-      propertyPath: m_Name
-      value: Obstacle (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d61472141b430e4b869f8b935fa573b, type: 3}

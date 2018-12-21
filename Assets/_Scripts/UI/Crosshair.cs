@@ -41,11 +41,17 @@ public class Crosshair : ExtendedMonoBehaviour
     const float DOT_SIZE_LERP_RATE = 10;
 
 
-    private void Start()
+    private void Awake()
     {
         crosshairSprite = GetComponent<SpriteRenderer>();
         dotSprite = dot.GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
         originalDotScale = dot.transform.localScale;
+
+        GameManager.Instance.Player.Damageable.OnDeath += OnPlayerDeath;
     }
 
     void Update()
@@ -109,6 +115,14 @@ public class Crosshair : ExtendedMonoBehaviour
             dotSprite.color = Color.Lerp(dotSprite.color, initialDotColor, COLOR_LERP_RATE * 0.5f * Time.deltaTime);
             dot.transform.localScale = Vector3.Lerp(dot.transform.localScale, originalDotScale, DOT_SIZE_LERP_RATE * Time.deltaTime);
         }
+    }
+
+    /// <summary>
+    /// Destroy the crosshairs (player death)
+    /// </summary>
+    private void OnPlayerDeath(GameObject destroyTrigger)
+    {
+        Destroy(gameObject);
     }
 }
 
