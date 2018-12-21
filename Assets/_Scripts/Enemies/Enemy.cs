@@ -7,10 +7,8 @@ using UnityEngine.AI;
 public enum EnemyState
 {
     ATTACKING,
-    DEAD,
     IDLE,
-    PURSUING,
-    RETREATING
+    PURSUING
 }
 
 
@@ -18,6 +16,7 @@ public enum EnemyState
 [RequireComponent(typeof(Damageable))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Wanderer))]
 public class Enemy : ExtendedMonoBehaviour
 {
     [Range(0, 1)]
@@ -51,13 +50,16 @@ public class Enemy : ExtendedMonoBehaviour
     private bool hasTarget = false;
 
     // Components
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
     private Material skinMaterial;
-    private Color originalSkinColor;
     private NavMeshAgent pathfinder;
+    private Wanderer wanderer;
 
+    private Color originalSkinColor;
     private Coroutine attackCoroutine;
+    private Coroutine wanderCoroutine;
     private bool canAttack = true;
+    private bool hasAppliedDamageOnAttack = false;
     private float collisionRadius;
     private float targetCollisionRadius;
 
@@ -71,6 +73,7 @@ public class Enemy : ExtendedMonoBehaviour
         collisionRadius = GetComponent<CapsuleCollider>().radius;
         skinMaterial = GetComponent<Renderer>().material;
         originalSkinColor = skinMaterial.color;
+        wanderer = GetComponent<Wanderer>();
     }
 
     void Start()
@@ -81,7 +84,7 @@ public class Enemy : ExtendedMonoBehaviour
         Damageable.OnDeath += OnDeath;
 
         // Target no longer be valid (or exist)
-        target = GameManager.Instance.Player.transform;
+        target = GameManager.Instance?.Player.transform;
         if (target != null)
         {
             hasTarget = true;
@@ -100,7 +103,7 @@ public class Enemy : ExtendedMonoBehaviour
         if (!Damageable.IsAlive) return;
 
         // Enemies cannot attack consecutively or while idle
-        if (hasTarget && canAttack && state != EnemyState.IDLE)
+        if (hasTarget && canAttack)
         {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
             distanceToTarget = distanceToTarget - collisionRadius - targetCollisionRadius;
@@ -112,8 +115,10 @@ public class Enemy : ExtendedMonoBehaviour
 
                 // Enemies can only attack after previous attack timeout
                 canAttack = false;
+                hasAppliedDamageOnAttack = false;
                 Wait(timeBetweenAttacks, () => {
                     canAttack = true;
+                    hasAppliedDamageOnAttack = false;
                 });
             }
         }
@@ -124,21 +129,21 @@ public class Enemy : ExtendedMonoBehaviour
         // Enemy can only do damage while attacking
         if (state == EnemyState.ATTACKING)
         {
-            // Apply damage to collider if appropriate
+            // Apply damage to collider if enemy hasn't applied damage yet this attack
             Damageable damageableObject = collider.gameObject.GetComponent<Damageable>();
-            if (damageableObject != null)
+            if (damageableObject != null && !hasAppliedDamageOnAttack)
             {
-                // Stop attack animation
-                state = EnemyState.RETREATING;
+                // Prevent further damage from this attack
+                hasAppliedDamageOnAttack = true;
 
                 // QUESTION: Does this actually work well?
                 // Apply force away from collision
                 Vector3 moveDirection = (transform.position - damageableObject.transform.position).normalized;
                 rigidbody.AddForce(moveDirection * 50);
 
-                // Attack damage is dealt to both target and enemy
-                damageableObject.TakeDamage(attackDamage, gameObject);
+                // Attack damage is dealt to both enemy and collision target
                 Damageable.TakeDamage(attackDamage, collider.gameObject);
+                damageableObject.TakeDamage(attackDamage, gameObject);
             }
 
             // TODO: Apply force to player
@@ -169,7 +174,11 @@ public class Enemy : ExtendedMonoBehaviour
         hasTarget = false;
         state = EnemyState.IDLE;
 
-        // TODO: Enemy wander after death
+        if (Damageable.IsAlive)
+        {
+            // Enemy should wander after target death
+            wanderCoroutine = StartCoroutine(wanderer.Wander());
+        }
     }
 
     /// <summary>
@@ -187,7 +196,7 @@ public class Enemy : ExtendedMonoBehaviour
         // Calculate direction and position of lunge
         Vector3 originalPosition = transform.position;
         Vector3 attackDirection = (target.position - transform.position).normalized;
-        Vector3 attackPosition = target.position - attackDirection * (collisionRadius + targetCollisionRadius);
+        Vector3 attackPosition = target.position - attackDirection * (collisionRadius + targetCollisionRadius - 0.1f);
 
         float lungePercent = 0;
 

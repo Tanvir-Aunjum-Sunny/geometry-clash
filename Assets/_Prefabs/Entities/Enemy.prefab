@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 258308241}
   - component: {fileID: 258308240}
   - component: {fileID: 4996567542639011522}
+  - component: {fileID: 1451482147060782149}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Player
@@ -265,6 +266,20 @@ MonoBehaviour:
   DamageSound: {fileID: 8300000, guid: cb48f31dabefdea40bc6459a69f88497, type: 3}
   DeathEffect: {fileID: 5086290544717913756, guid: 440f390d9c56f714da4ae5be2e09ab7d,
     type: 3}
+--- !u!114 &1451482147060782149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290832900702525043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6dc72fc4b0984e4c8aea4ab23d5ca2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WanderPointRefreshRate: {x: 4, y: 6}
+  WanderRadius: 20
 --- !u!1 &6710568296725800251
 GameObject:
   m_ObjectHideFlags: 0
