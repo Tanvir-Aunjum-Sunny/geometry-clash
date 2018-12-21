@@ -18,20 +18,23 @@ public class Spawner : ExtendedMonoBehaviour
     public Transform SpawnedChildren;
 
     private Wave wave;
-    private Coroutine spawnRoutine;
+    private Coroutine spawnCoroutine;
     private int enemiesRemainingInWave;
     private int enemiesRemainingToSpawn;
     private int waveNumber;
 
-    
+
+    private void Awake()
+    {
+        if (GameManager.Instance.Player != null)
+        {
+            GameManager.Instance.Player.Damageable.OnDeath += OnPlayerDeath;
+        }
+    }
+
     void Start()
     {
         NextWave();
-    }
-
-    void Update()
-    {
-
     }
 
 
@@ -43,6 +46,9 @@ public class Spawner : ExtendedMonoBehaviour
         // Prevent exceeding number of waves
         if (++waveNumber > Waves.Count) return;
 
+        // Only start waves while player is alive
+        if (GameManager.Instance.Player == null) return;
+
         wave = Waves[waveNumber - 1];
 
         enemiesRemainingToSpawn = wave.Enemies;
@@ -51,8 +57,17 @@ public class Spawner : ExtendedMonoBehaviour
         // Start next wave (after timeout)
         Wait(TimeBetweenWaves, () =>
         {
-            spawnRoutine = StartCoroutine(SpawnEnemy());
+            spawnCoroutine = StartCoroutine(SpawnEnemy());
         });
+    }
+
+    /// <summary>
+    /// Handle player death (stop spawning)
+    /// </summary>
+    /// <param name="killer">Object that killed player</param>
+    private void OnPlayerDeath(GameObject killer)
+    {
+        StopCoroutine(spawnCoroutine);
     }
 
     /// <summary>
@@ -85,6 +100,6 @@ public class Spawner : ExtendedMonoBehaviour
             yield return new WaitForSeconds(wave.TimeBetweenSpawns);
         }
 
-        StopCoroutine(spawnRoutine);
+        StopCoroutine(spawnCoroutine);
     }
 }

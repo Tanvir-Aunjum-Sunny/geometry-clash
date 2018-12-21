@@ -23,11 +23,11 @@ public class Projectile : ExtendedMonoBehaviour
 
         origin = transform.position;
 
-        // Find all colliders projectile intersects with initiaally
+        // Find all colliders the projectile intersects with initiaally
         Collider[] initialCollisions = Physics.OverlapSphere(transform.position, 0.1f, CollisionMask);
         if (initialCollisions.Length > 0)
         {
-            // TODO: Handle initial collisions
+            OnCollision(initialCollisions[0].gameObject);
         }
 
         // Projectiles can have limited lifetime (unusual)
@@ -69,17 +69,23 @@ public class Projectile : ExtendedMonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Bullet collision with other entities
-    /// </summary>
-    /// <param name="collider">Colliding entity</param>
     private void OnCollisionEnter(Collision collider)
     {
+        OnCollision(collider.gameObject);
+    }
+
+
+    /// <summary>
+    /// Handle bullet collision with other entities
+    /// </summary>
+    /// <param name="collider">Colliding game object</param>
+    private void OnCollision(GameObject collider)
+    {
         // Only detect collisions on appropriate layers
-        if (!UnityExtensions.LayerContains(CollisionMask, collider.gameObject.layer)) return;
+        if (!UnityExtensions.LayerContains(CollisionMask, collider.layer)) return;
 
         // Apply damage to collider if appropriate
-        Damageable damageableObject = collider.gameObject.GetComponent<Damageable>();
+        Damageable damageableObject = collider.GetComponent<Damageable>();
         if (damageableObject != null)
         {
             damageableObject.TakeDamage(Data.Damage, gameObject);
@@ -87,14 +93,14 @@ public class Projectile : ExtendedMonoBehaviour
 
         // TODO: Does this logic belong in Damageable component?
         // Enemies react differently to being hit
-        Enemy enemy = collider.gameObject.GetComponent<Enemy>();
+        Enemy enemy = collider.GetComponent<Enemy>();
         if (enemy == null)
         {
             if (Data.HitEffect != null)
             {
                 // Use collider material for hit effect
-                Material collidingMaterial = collider.gameObject.GetComponent<Renderer>().material;
-                Data.HitEffect.gameObject.GetComponent<Renderer>().material = collidingMaterial;
+                Material collidingMaterial = collider.GetComponent<Renderer>().material;
+                Data.HitEffect.GetComponent<Renderer>().material = collidingMaterial;
 
                 Instantiate(Data.HitEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);
             }
@@ -107,7 +113,7 @@ public class Projectile : ExtendedMonoBehaviour
             if (enemy.Damageable.DamageEffect != null)
             {
                 // Use collider material for hit effect
-                Material collidingMaterial = collider.gameObject.GetComponent<Renderer>().material;
+                Material collidingMaterial = collider.GetComponent<Renderer>().material;
                 enemy.Damageable.DamageEffect.GetComponent<Renderer>().material = collidingMaterial;
 
                 Instantiate(enemy.Damageable.DamageEffect, transform.position, Quaternion.identity, TemporaryManager.Instance.TemporaryChildren);

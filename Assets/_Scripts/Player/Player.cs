@@ -14,7 +14,7 @@ public class Player : ExtendedMonoBehaviour
     private Vector3 lookPoint;
 
 
-    protected void Start()
+    private void Awake()
     {
         Damageable = GetComponent<Damageable>();
         rb = GetComponent<Rigidbody>();

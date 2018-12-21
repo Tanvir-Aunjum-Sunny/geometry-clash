@@ -16,7 +16,7 @@ public class PlayerController : ExtendedMonoBehaviour
     private Vector3 velocity;
     private Vector3 mousePoint;
 
-    void Start()
+    void Awake()
     {
         player = GetComponent<Player>();
     }
